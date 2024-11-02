@@ -107,7 +107,7 @@ function load_npc(id) {
     document.getElementById('npc-id').innerText = id;
     document.getElementById('npc-combat').innerText = npc.combat_level;
     document.getElementById('npc-examine').innerText = npc.examine;
-    document.getElementById('npc-clue').innerText = get_clue(npc.clue);
+    document.getElementById('npc-clue').innerText = get_clue(npc.clue_level);
     document.getElementById('npc-attack_style').innerText = get_style(npc.attack_style);
 
     if (npc.attack_speed) {
