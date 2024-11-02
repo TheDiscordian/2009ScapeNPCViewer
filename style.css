@@ -1,0 +1,44 @@
+body {
+    background-color: #e2dbc8;
+}
+
+img {
+    vertical-align: middle;
+}
+
+.infobox {
+    margin: 0 auto;
+    width: 350px;
+    background-color: #d8ccb4;
+    border: 1px solid #94866d;
+    padding: 0;
+    border-collapse: collapse;
+    line-height: 1.4em;
+    table-layout: fixed;
+}
+
+.infobox .infobox-header {
+    background-color: #b8a282;
+    text-align: center;
+    padding: 0;
+}
+
+.infobox td {
+    padding: 0.25em 0.5em;
+}
+
+.infobox .infobox-nested {
+    text-align: center;
+    
+}
+
+.infobox .infobox-subheader {
+    background-color: #b8a282;
+    line-height: 2em;
+}
+
+.infobox th:not(.infobox-header):not(.infobox-subheader):not(.infobox-nested) {
+    text-align: right;
+    border-right: 2px solid #b8a282;
+    padding: 0.25em 0.5em;
+}
