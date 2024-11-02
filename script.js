@@ -135,7 +135,7 @@ function load_npc(id) {
     document.getElementById('npc-str').innerText = npc.strength_level || '?';
     document.getElementById('npc-def').innerText = npc.defence_level || '?';
     document.getElementById('npc-mage').innerText = npc.magic_level || '?';
-    document.getElementById('npc-range').innerText = npc.ranged_level || '?';
+    document.getElementById('npc-range').innerText = npc.range_level || '?';
     document.getElementById('npc-weakness').innerText = npc.weakness || '?';
 
     let bonuses = [];
