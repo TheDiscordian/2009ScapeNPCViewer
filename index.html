@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2009scape NPC Viewer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="onload();">
+    <header>
+        <h1 style="text-align: center;">2009scape NPC Viewer</h1>
+    </header>
+    <main>
+        <section style="text-align: center;margin-bottom:1em;">
+            <label for="npc-search">Search for NPC:</label>
+            <input type="text" id="npc-search" name="npc-search" placeholder="Enter NPC name or ID" oninput="search_npc()">
+        </section>
+        <section style="text-align: center;margin-bottom:1em;" id="npc-dropdown-box" hidden>
+          <label for="npc-dropdown">NPCs:</label>
+          <select id="npc-dropdown" name="npc-dropdown" onchange="select_npc(this)"></select>
+        </section>
+        
+        <section id="npc-box" hidden>
+            <table class="infobox infobox-switch no-parenthesis-style infobox-monster" data-resource-class=".infobox-resources-Infobox_Monster">
+              <tbody>
+                <tr>
+                  <th colspan="24" class="infobox-header" id="npc-name">Man</th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <!--<tr>
+                  <td colspan="24" class="infobox-image infobox-full-width-content" data-attr-param="image">
+                    <img src="/images/thumb/Man_%28blue%29.webp/120px-Man_%28blue%29.webp" width="120" height="314" srcset="/images/thumb/Man_%28blue%29.webp/240px-Man_%28blue%29.webp 2x">
+                  </td>
+                </tr>-->
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <!--<tr>
+                  <th colspan="8">Members</th>
+                  <td colspan="16" id="npc-members">No</td>
+                </tr>-->
+                <tr>
+                  <th colspan="8">ID</th>
+                  <td colspan="16" id="npc-id">1</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Combat level</th>
+                  <td colspan="16" id="npc-combat">2</td>
+                </tr>
+                <!--<tr>
+                  <th colspan="8">Size</th>
+                  <td colspan="16" id="npc-size">1x1</td>
+                </tr>-->
+                <tr>
+                  <th colspan="8">Examine</th>
+                  <td colspan="16" id="npc-examine">One of Gielinor's many citizens.</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Clue Level</th>
+                  <td colspan="16" id="npc-clue">0</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">Combat info</th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="8">XP bonus</th>
+                  <td colspan="16" id="npc-xpbonus">+0%</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Max hit</th>
+                  <td colspan="16" id="npc-max_hit_fmt">? (not implemented)</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Aggressive</th>
+                  <td colspan="16" id="npc-aggressive">No</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Poisonous</th>
+                  <td colspan="16" id="npc-poisonous">No</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Attack style</th>
+                  <td colspan="16" id="npc-attack_style">Crush</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Attack speed</th>
+                  <td colspan="16" id="npc-attack_speed">4 ticks (2.4 seconds)</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Respawn time</th>
+                  <td colspan="16" id="npc-respawn">25 ticks (15 seconds)</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Weakness</th>
+                  <td colspan="16" id="npc-weakness">?</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">
+                  <img src="/images/Combat_icon.webp" width="19" height="19">Combat stats
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Hitpoints_icon.webp" width="23" height="20">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Attack_icon.webp" width="25" height="25">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Strength_icon.webp" width="16" height="20">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Defence_icon.webp" width="17" height="19">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Magic_icon.webp" width="25" height="23">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Ranged_icon.webp" width="23" height="23">
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="4" class="infobox-nested" id="npc-hitpoints">7</td>
+                  <td colspan="4" class="infobox-nested" id="npc-att">1</td>
+                  <td colspan="4" class="infobox-nested" id="npc-str">1</td>
+                  <td colspan="4" class="infobox-nested" id="npc-def">1</td>
+                  <td colspan="4" class="infobox-nested" id="npc-mage">1</td>
+                  <td colspan="4" class="infobox-nested" id="npc-range">1</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">
+                  <img src="/images/Attack_icon.webp" width="25" height="25">Aggressive stats
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="4" class="infobox-nested">
+                  <img alt="Monster attack bonus" src="/images/Attack_icon.webp" width="25" height="25">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img alt="Monster strength bonus" src="/images/Strength_icon.webp" width="16" height="20">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Magic_icon.webp" width="25" height="23">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img alt="Monster magic strength bonus" src="/images/Magic_Damage_icon.webp" width="28" height="28">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img src="/images/Ranged_icon.webp" width="23" height="23">
+                  </th>
+                  <th colspan="4" class="infobox-nested">
+                  <img alt="Monster ranged strength bonus" src="/images/Ranged_Strength_icon.webp" width="26" height="25">
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="4" class="infobox-nested" id="npc-attbns">+0</td>
+                  <td colspan="4" class="infobox-nested" id="npc-strbns">+0</td>
+                  <td colspan="4" class="infobox-nested" id="npc-amagic">+0</td>
+                  <td colspan="4" class="infobox-nested" id="npc-mbns">??</td>
+                  <td colspan="4" class="infobox-nested" id="npc-arange">+0</td>
+                  <td colspan="4" class="infobox-nested" id="npc-rngbns">+0</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">
+                  <img src="/images/Defence_icon.webp" width="17" height="19">Melee defence
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="8" class="infobox-nested">
+                  <img src="/images/White_dagger.webp" width="21" height="31">
+                  </th>
+                  <th colspan="8" class="infobox-nested">
+                  <img src="/images/White_scimitar.webp" width="27" height="30">
+                  </th>
+                  <th colspan="8" class="infobox-nested">
+                  <img src="/images/White_warhammer.webp" width="22" height="29">
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="8" class="infobox-nested" id="npc-dstab">-21</td>
+                  <td colspan="8" class="infobox-nested" id="npc-dslash">-21</td>
+                  <td colspan="8" class="infobox-nested" id="npc-dcrush">-21</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">
+                  <img src="/images/Magic_defence_icon.webp" width="30" height="23">Magic defence
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-nested">
+                  <img src="/images/Magic_icon.webp" width="25" height="23">
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-nested" id="npc-dmagic">-21</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-subheader">
+                  <img src="/images/Ranged_defence_icon.webp" width="28" height="23">Ranged defence
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="24" class="infobox-nested">
+                  <img alt="Standard" src="/images/Steel_arrow_5.webp" width="31" height="30">
+                  </th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-nested" id="npc-dranged">-21</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <!--
+                <tr>
+                  <th colspan="24" class="infobox-subheader">Immunities</th>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <th colspan="8">Poison</th>
+                  <td colspan="16" id="npc-immunepoison">Not immune</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Venom</th>
+                  <td colspan="16" id="npc-immunevenom">Not immune</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Cannons</th>
+                  <td colspan="16" id="npc-immunecannon">Not immune</td>
+                </tr>
+                <tr>
+                  <th colspan="8">Thralls</th>
+                  <td colspan="16" id="npc-immunethrall">Not immune</td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="infobox-padding"></td>
+                </tr>
+                <tr>
+                  <td colspan="24" class="dps-calc-button infobox-full-width-content" id="npc-dpscalc">
+                  <div class="dps-calc plainlinks">
+                    <a target="_blank" rel="noreferrer noopener" class="external text" href="https://tools.runescape.wiki/osrs-dps/?monster=3106">
+                    <span class="mw-ui-button dps-calc-openbtn mw-ui-progressive" style="min-height:0; margin-bottom: 8px; display: inline-flex; align-items: center; gap: 4px;">
+                      <img src="/images/thumb/Dps_calc_logo.webp/32px-Dps_calc_logo.webp" width="32" height="31" srcset="/images/thumb/Dps_calc_logo.webp/64px-Dps_calc_logo.webp 2x"> Open in DPS calculator </span>
+                    </a>
+                  </div>
+                  </td>
+                </tr>-->
+              </tbody>
+            </table>
+          </section>
+    </main>
+    <footer>
+        <p>2009scape NPC Viewer</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html></div></html>
