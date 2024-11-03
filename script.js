@@ -37,6 +37,32 @@ function get_style(n) {
     }
 }
 
+function get_max_hit(npc, n) {
+    let max_hit = "??";
+    if (!n) { // melee
+        const style_bonus = 1; // I believe all NPCs are deemed 'controlled' style
+        let effective_str = parseInt(npc.strength_level) + style_bonus + 8;
+        let str_bonus = 0;
+        if (npc.bonuses) {
+            let bonuses = npc.bonuses.split(',');
+            str_bonus = parseInt(bonuses[10]);
+        }
+        max_hit = Math.floor(0.5 + effective_str * ((str_bonus + 64) / 640));
+    } else if (n == "1") { // ranged
+        const style_bonus = 0; // Should be 3 if inaccurate
+        let effective_str = parseInt(npc.range_level) + style_bonus + 8;
+        let str_bonus = 0;
+        if (npc.bonuses) {
+            let bonuses = npc.bonuses.split(',');
+            str_bonus = parseInt(bonuses[14]);
+        }
+        max_hit = Math.floor(0.5 + effective_str * ((str_bonus + 64) / 640));
+    } else if (n == "2") {
+        return "??"; // other calculators use a hardcoded value (no idea how 2009scape calculates this)
+    }
+    return max_hit;
+}
+
 function get_clue(n) {
     if (n == "0") {
         return "Easy";
@@ -108,7 +134,8 @@ function load_npc(id) {
     document.getElementById('npc-combat').innerText = npc.combat_level;
     document.getElementById('npc-examine').innerText = npc.examine;
     document.getElementById('npc-clue').innerText = get_clue(npc.clue_level);
-    document.getElementById('npc-attack_style').innerText = get_style(npc.attack_style);
+    document.getElementById('npc-attack_style').innerText = get_style(npc.combat_style);
+    document.getElementById('npc-max_hit').innerText = get_max_hit(npc, npc.combat_style);
 
     if (npc.attack_speed) {
         document.getElementById('npc-attack_speed').innerText = Math.round((npc.attack_speed*0.6 + Number.EPSILON)*100)/100 + ' seconds';
@@ -158,6 +185,7 @@ function load_npc(id) {
         document.getElementById('npc-dmagic').innerText = bonuses[8];
         document.getElementById('npc-dranged').innerText = bonuses[9];
         document.getElementById('npc-strbns').innerText = bonuses[10];
+        document.getElementById('npc-rngbns').innerText = bonuses[14];
     }
 
 }
