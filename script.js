@@ -49,7 +49,7 @@ function get_max_hit(npc, n) {
         }
         max_hit = Math.floor(0.5 + effective_str * ((str_bonus + 64) / 640));
     } else if (n == "1") { // ranged
-        const style_bonus = 0; // Should be 3 if inaccurate
+        const style_bonus = 1; // According to https://tools.runescape.wiki/osrs-dps/, below is the formula for examine monster (which differs from OSRS wiki)
         let effective_str = parseInt(npc.range_level) + style_bonus + 8;
         let str_bonus = 0;
         if (npc.bonuses) {
