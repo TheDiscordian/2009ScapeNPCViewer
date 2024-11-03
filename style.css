@@ -32,6 +32,10 @@ img {
     
 }
 
+.infobox .infobox-nested + .infobox-nested {
+    border-left: 2px solid #b8a282;
+}
+
 .infobox .infobox-subheader {
     background-color: #b8a282;
     line-height: 2em;
