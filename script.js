@@ -39,6 +39,22 @@ function get_style(n) {
 
 function get_max_hit(npc, n) {
     let max_hit = "??";
+    switch (parseInt(npc.id)) {
+        case 2025: // Ahrim
+            return 25;
+        case 2026: // Dharok
+            return 60;
+        case 2027: // Guthan
+            return 24;
+        case 2028: // Karil
+            return 20;
+        case 2029: // Torag
+            return 23;
+        case 2030: // Verac
+            return 25;
+        case 5363: // Mithril dragon
+            return "28 (Melee)<br>18 (Magic)<br>18 (Ranged)";
+    }
     if (!n) { // melee
         const style_bonus = 1; // I believe all NPCs are deemed 'controlled' style
         let effective_str = parseInt(npc.strength_level) + style_bonus + 8;
@@ -58,7 +74,20 @@ function get_max_hit(npc, n) {
         }
         max_hit = Math.floor(0.5 + effective_str * ((str_bonus + 64) / 640));
     } else if (n == "2") {
-        return "??"; // other calculators use a hardcoded value (no idea how 2009scape calculates this)
+        /* 2009scape code (https://gitlab.com/2009scape/2009scape/-/blob/master/Server/src/main/core/game/node/entity/combat/spell/DefaultCombatSpell.java#L52)
+        	public int getMaximumImpact(Entity entity, Entity victim, BattleState state) {
+                int level = entity.getSkills().getLevel(Skills.MAGIC);
+                int bonus = entity.getProperties().getBonuses()[13];
+                return (int) ((14 + level + (bonus / 8) + ((level * bonus) * 0.016865))) / 10 + 1;
+            }
+        */
+        let magic_level = parseInt(npc.magic_level);
+        let str_bonus = 0;
+        if (npc.bonuses) {
+            let bonuses = npc.bonuses.split(',');
+            str_bonus = parseInt(bonuses[13]);
+        }
+        max_hit = Math.floor((14 + magic_level + (str_bonus / 8) + ((npc.magic_level * str_bonus) * 0.016865)) / 10 + 1);
     }
     return max_hit;
 }
@@ -99,8 +128,7 @@ function search_npcs(input) {
                 list.appendChild(option);
             });
         });
-        // Show dropdown if it contains more than 1 result
-        document.getElementById('npc-dropdown-box').hidden = results.length <= 1;
+        document.getElementById('npc-dropdown-box').hidden = (list.childElementCount <= 1);
         load_npc(list.value);
         return true;
     }
@@ -135,7 +163,7 @@ function load_npc(id) {
     document.getElementById('npc-examine').innerText = npc.examine;
     document.getElementById('npc-clue').innerText = get_clue(npc.clue_level);
     document.getElementById('npc-attack_style').innerText = get_style(npc.combat_style);
-    document.getElementById('npc-max_hit').innerText = get_max_hit(npc, npc.combat_style);
+    document.getElementById('npc-max_hit').innerHTML = get_max_hit(npc, npc.combat_style);
 
     if (npc.attack_speed) {
         document.getElementById('npc-attack_speed').innerText = Math.round((npc.attack_speed*0.6 + Number.EPSILON)*100)/100 + ' seconds';
@@ -169,7 +197,7 @@ function load_npc(id) {
     if (npc.bonuses) {
         bonuses = npc.bonuses.split(',');
         // "bonuses": "18,18,18,0,0,73,76,70,-11,72,0,16,0,0,0"
-        // attbns, ??, ??, amagic, arange, dstab, dslash, dcrush, dmagic, drange, ??, strbns, ??, ??, rngbns
+        // attbns, ??, ??, amagic, arange, dstab, dslash, dcrush, dmagic, drange, ??, strbns, ??, mbns, rngbns
         // first 3 are probably different att styles...
         bonuses = bonuses.map(bonus => {
             if (!bonus) return '?';
@@ -185,6 +213,7 @@ function load_npc(id) {
         document.getElementById('npc-dmagic').innerText = bonuses[8];
         document.getElementById('npc-dranged').innerText = bonuses[9];
         document.getElementById('npc-strbns').innerText = bonuses[10];
+        document.getElementById('npc-mbns').innerText = bonuses[12];
         document.getElementById('npc-rngbns').innerText = bonuses[14];
     }
 
